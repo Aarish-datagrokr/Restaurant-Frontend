@@ -1,15 +1,28 @@
 import React,{useState} from 'react';
-import { Grid, TextField, Button, Card, CardContent, Typography } from '@material-ui/core';
+import { Grid, TextField, Button, Card, CardContent, Typography, makeStyles } from '@material-ui/core';
 import Select from 'react-select';
 import axios from 'axios';
+import Dialog from "@material-ui/core/Dialog";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
 import {Notifications} from 'react-push-notification';
-import addNotification from 'react-push-notification';
+//import addNotification from 'react-push-notification';
+
+const useStyles = makeStyles((Theme) => ({
+  backDrop: {
+    backdropFilter: "blur(3px)",
+    backgroundColor:'rgba(0,0,30,0.4)'
+  },
+}));
 
 const BookingForm = () => {
   const [name,setName]=useState('');
   const [phoneNo,setPhoneNo]=useState('');
   const [value,setValue]=useState(0);
   const [reservationTime,setReservationTime]=useState('');
+  const [bookingStatus,setBookingStatus]=useState('Enter details to book table.');
       
   const noOfMembers = [
     {value:0, label:"Members"},
@@ -21,6 +34,16 @@ const BookingForm = () => {
 
   const handleChange = (value) => {
     setValue(value);
+  };
+
+  const classes = useStyles();
+  const [open,setOpen]=React.useState(false);
+  const handleClickToOpen = () => {
+    if(phoneNo.length==10) setOpen(true);
+  };
+  const handleToClose = () => {
+    setOpen(false);
+    setBookingStatus("Enter details to book table.");
   };
 
 
@@ -37,7 +60,7 @@ const BookingForm = () => {
       }, 
        })
           .then((response) => {
-            addNotification({
+/*            addNotification({
               title: 'Success',
               subtitle: 'Table Booked',
               message: response.data,
@@ -45,24 +68,19 @@ const BookingForm = () => {
               closeButton:"X",
               backgroundTop:"green",
               backgroundBottom:"yellowgreen"
-            })
+            })*/
+            setBookingStatus(response.data);  
             setName('');
             setPhoneNo('');
             setValue(0);
             setReservationTime('');      
           }, (error) => {
-            addNotification({
-              title: 'Warning',
-              subtitle: 'Something wrong!',
-              message: error.response.data,
-              theme: 'red',
-              closeButton:"X",
-            })  
-                setName('');
-      setPhoneNo('');
-      setValue(0);
-      setReservationTime('');      
-      console.log(error);
+            setBookingStatus(error.response.data);
+            setName('');
+            setPhoneNo('');
+            setValue(0);
+            setReservationTime('');      
+            console.log(error);
   });
 
 }
@@ -97,11 +115,33 @@ const BookingForm = () => {
                     <TextField name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button type="submit" variant="contained" color="primary" fullWidth>Submit</Button>
+                    <Button type="submit" variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>
                   </Grid>
-  
                 </Grid>
               </form>
+              <Dialog
+                fullWidth
+                open={open}
+                onClose={handleToClose}
+                maxWidth="xs"
+                BackdropProps={{
+                  classes: {
+                    root: classes.backDrop,
+                  },
+                }} >
+          <DialogTitle>{"Notification!"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {bookingStatus}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleToClose} 
+                    color="primary" autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
             </CardContent>
             <Notifications />
           </Card>
