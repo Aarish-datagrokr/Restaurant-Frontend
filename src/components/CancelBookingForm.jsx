@@ -41,7 +41,8 @@ const useStyles = makeStyles((Theme) => ({
           setCancellationStatus(response.data);
           setPhoneNo('');
         } catch(err) {
-          setCancellationStatus(err.response.data);
+          if(!err.response.data==='') setCancellationStatus(err.response.data);
+          else setCancellationStatus("Something Wrong.");
           setPhoneNo('');
           console.log("err->", err.response.data)
  //         console.log(err)

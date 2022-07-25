@@ -61,12 +61,12 @@ const UpdateBookingForm = () => {
                      setReservationTime('');      
          
                     }, (error) => {
-                       setUpdationStatus(error.response.data);
-                       setPhoneNo('');
-                       setValue(0);
-                       setReservationTime('');      
-           
-                       console.log(error);
+                        if(!error.response.data==='') setUpdationStatus(error.response.data);
+                        else setUpdationStatus("Something Wrong.");
+                        setPhoneNo('');
+                        setValue(0);
+                        setReservationTime('');      
+                        console.log(error);
                     });
                     
 }
