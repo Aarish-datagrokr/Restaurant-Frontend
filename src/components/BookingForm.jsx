@@ -88,7 +88,7 @@ const BookingForm = () => {
     return (
       <div className="App"> 
         <Grid>
-          <Card style={{ maxWidth: 450,  padding: "20px 5px", margin: "0 auto" }}>
+          <Card style={{ maxWidth: 510,  padding: "20px 5px", margin: "0 auto", boxShadow: 'none'}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Table Booking
