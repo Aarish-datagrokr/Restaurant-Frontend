@@ -86,9 +86,10 @@ const BookingForm = () => {
 
 }
     return (
-      <div className="App"> 
+      <div className="App" style={{position: 'absolute', left: '50%', top: '52%',
+      transform: 'translate(-50%, -50%)'}}> 
         <Grid>
-          <Card style={{ maxWidth: 510,  padding: "20px 5px", margin: "0 auto", boxShadow: 'none'}}>
+          <Card style={{ maxWidth: 510,  padding: "20px 5px", margin: "auto auto", boxShadow: "none"}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Table Booking
