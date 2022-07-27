@@ -1,0 +1,64 @@
+.welcome-text {
+    color: whitesmoke;
+    background-color: #55331b;
+    font-size: 60pt;
+    font-weight: bold;
+    width: fit-content;
+}
+
+.about {
+    color: #55331b;
+    background-color: cornsilk;
+    font-size: 30pt;
+    font-weight:lighter;
+    width: fit-content;
+}
+
+.typical {
+    color: #55331b;
+    background-color: cornsilk;
+    font-size: 30pt;
+    font-weight:lighter;
+    width: fit-content;
+}
+
+.slogan {
+    font-size: 30pt;
+    font-style:italic;
+    font-weight: bold;
+    width: fit-content;
+    background: #F0D156;
+    background: radial-gradient(circle farthest-corner at center center, #F0D156 0%, #bea571 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;}
+
+@media screen and (max-width: 550px) {
+.welcome-text {
+    margin-top: 50pt;
+    width: fit-content;
+    display: block;
+    font-size: 32pt;
+}
+
+.about {
+    color: #55331b;
+    background-color: cornsilk;
+    font-size: 25pt;
+    font-weight:lighter;
+    width: fit-content;
+}
+
+.typical {
+    color: #55331b;
+    background-color: cornsilk;
+    font-size: 15pt;
+    font-weight:lighter;
+    width: fit-content;
+}
+
+.slogan {
+    color: white;
+}
+
+
+}  

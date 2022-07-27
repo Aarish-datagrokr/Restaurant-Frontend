@@ -1,11 +1,25 @@
 import React,{useState} from 'react';
 import {Theme, Grid, TextField, Button, Card, CardContent, Typography, makeStyles} from '@material-ui/core';
 import axios from 'axios';
-import Dialog from "@material-ui/core/Dialog";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
+
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(165, 42, 42)"
+    },
+    secondary: {
+      main: 'rgb(245, 222, 179)'
+    }
+  }
+});
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+}); 
 
 const useStyles = makeStyles((Theme) => ({
   backDrop: {
@@ -20,13 +34,16 @@ const useStyles = makeStyles((Theme) => ({
     const [phoneNo,setPhoneNo]=useState('');
     
     const [open,setOpen]=React.useState(false);
+    const [severity,setSeverity]=React.useState("");
     const handleClickToOpen = () => {
       if(!phoneNo=='' && phoneNo.length==10) setOpen(true);
     };
-    const handleToClose = () => {
+    const handleToClose = (event,reason) => {
       setOpen(false);
-      setCancellationStatus("Enter details to cancel booking");
     };
+
+    
+    
 
     const classes = useStyles();
     const handleSubmit = async(event) => {
@@ -39,8 +56,10 @@ const useStyles = makeStyles((Theme) => ({
             method: 'DELETE'
           });
           setCancellationStatus(response.data);
+          setSeverity("sucess");
           setPhoneNo('');
         } catch(err) {
+          setSeverity("error");
           if(!err.response.data==='') setCancellationStatus(err.response.data);
           else setCancellationStatus("Something Wrong.");
           setPhoneNo('');
@@ -51,9 +70,9 @@ const useStyles = makeStyles((Theme) => ({
     
   
     return (
-      <div className="App" style={{position: 'absolute', left: '50%', top: '52%',
-      transform: 'translate(-50%, -50%)'}}> 
+      <div className="App" style={{marginTop: "120pt"}}> 
         <Grid>
+          <MuiThemeProvider theme={theme}>
           <Card style={{ maxWidth: 510, padding: "20px 5px", margin: "0 auto" ,boxShadow: 'none'}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
@@ -77,31 +96,17 @@ const useStyles = makeStyles((Theme) => ({
                   </Grid>  
                 </Grid>
               </form>
-              <Dialog
-                fullWidth
+              <Snackbar
                 open={open}
-                onClose={handleToClose}
-                maxWidth="xs"
-                BackdropProps={{
-                  classes: {
-                    root: classes.backDrop,
-                  },
-                }} >
-          <DialogTitle>{"Notification!"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {cancellationStatus}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleToClose} 
-                    color="primary" autoFocus>
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+                autoHideDuration={6000}
+                onClose={handleToClose}>
+                    <Alert onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
+                      {cancellationStatus}
+                    </Alert>
+              </Snackbar>
             </CardContent>
           </Card>
+          </MuiThemeProvider>
         </Grid>
       </div>
     );

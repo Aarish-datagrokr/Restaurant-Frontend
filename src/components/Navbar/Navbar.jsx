@@ -8,8 +8,8 @@ export default function Navbar() {
 
   return (
     <nav className="navigation">
-      <Link to="/" className="brand-name">
-        Restaurant
+      <Link to="/" className="brand-logo">
+        <img src="https://www.pinclipart.com/picdir/middle/86-862588_book-fair-clip-art.png" style={{width: 60, height: 50}}></img>
       </Link>
       <button
         className="hamburger"
@@ -37,25 +37,21 @@ export default function Navbar() {
         }
       >
         <ul>
-          <br/>
           <li>
             <Link to='/add' onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}>Add Booking</Link>
-          </li>
-          <hr />
+          </li><br />
           <li>
             <Link to='/update' onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}>Update Booking</Link>
-          </li>
-          <hr />
+          </li><br />
           <li>
             <Link to='/delete' onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}>Delete Booking</Link>
-          </li>
-          <hr />
+          </li><br />
         </ul>
       </div>
     </nav>

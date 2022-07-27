@@ -2,13 +2,25 @@ import React,{useState} from 'react';
 import { Grid, TextField, Button, Card, CardContent, Typography, makeStyles } from '@material-ui/core';
 import Select from 'react-select';
 import axios from 'axios';
-import Dialog from "@material-ui/core/Dialog";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import {Notifications} from 'react-push-notification';
-//import addNotification from 'react-push-notification';
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(165, 42, 42)"
+    },
+    secondary: {
+      main: 'rgb(245, 222, 179)'
+    }
+  }
+});
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+}); 
 
 const useStyles = makeStyles((Theme) => ({
   backDrop: {
@@ -38,12 +50,12 @@ const BookingForm = () => {
 
   const classes = useStyles();
   const [open,setOpen]=React.useState(false);
+  const [severity,setSeverity]=useState("");
   const handleClickToOpen = () => {
     if(phoneNo.length==10) setOpen(true);
   };
   const handleToClose = () => {
     setOpen(false);
-    setBookingStatus("Enter details to book table.");
   };
 
 
@@ -69,12 +81,14 @@ const BookingForm = () => {
               backgroundTop:"green",
               backgroundBottom:"yellowgreen"
             })*/
+            setSeverity("success");
             setBookingStatus(response.data);  
             setName('');
             setPhoneNo('');
             setValue(0);
             setReservationTime('');      
           }, (error) => {
+            setSeverity("error");
             if(!error.response.data==='') setBookingStatus(error.response.data);
             else setBookingStatus("Something Wrong.");
             setName('');
@@ -86,10 +100,10 @@ const BookingForm = () => {
 
 }
     return (
-      <div className="App" style={{position: 'absolute', left: '50%', top: '52%',
-      transform: 'translate(-50%, -50%)'}}> 
-        <Grid>
-          <Card style={{ maxWidth: 510,  padding: "20px 5px", margin: "auto auto", boxShadow: "none"}}>
+      <div className="App" style={{marginTop: "90pt"}}> 
+        <Grid >
+          <MuiThemeProvider theme={theme}>
+          <Card style={{ maxWidth: 510,  padding: "20px 5px", margin: "auto auto"}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Table Booking
@@ -111,42 +125,38 @@ const BookingForm = () => {
                        value={phoneNo} placeholder="Enter phone number" label="Phone number" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                  <Select options={noOfMembers} name="members" onChange={handleChange} value={value} placeholder='Members' maxMenuHeight={150} />
+                  <Select style={{color:"wheat"}} options={noOfMembers} name="members" onChange={handleChange} value={value} placeholder='Members' maxMenuHeight={150} 
+                      theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                        ...theme.colors,
+                          text: 'brown',
+                          primary25: 'wheat',
+                          primary: 'brown',
+                        },
+                      })}
+                  />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button type="submit" variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>
+                    <Button type="submit" style={{backgroundColor: "brown",fontSize: "18px"}} variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>
                   </Grid>
                 </Grid>
               </form>
-              <Dialog
-                fullWidth
+              <Snackbar
                 open={open}
-                onClose={handleToClose}
-                maxWidth="xs"
-                BackdropProps={{
-                  classes: {
-                    root: classes.backDrop,
-                  },
-                }} >
-          <DialogTitle>{"Notification!"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {bookingStatus}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleToClose} 
-                    color="primary" autoFocus>
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+                autoHideDuration={6000}
+                onClose={handleToClose}>
+                    <Alert onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
+                      {bookingStatus}
+                    </Alert>
+              </Snackbar>
             </CardContent>
-            <Notifications />
           </Card>
+          </MuiThemeProvider>
         </Grid>
       </div>
     );

@@ -7,6 +7,26 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(165, 42, 42)"
+    },
+    secondary: {
+      main: 'rgb(245, 222, 179)'
+    }
+  }
+});
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+}); 
+
 
 const useStyles = makeStyles((Theme) => ({
   backDrop: {
@@ -35,12 +55,13 @@ const UpdateBookingForm = () => {
 
       const classes = useStyles();
       const [open,setOpen]=React.useState(false);
+      const [severity,setSeverity]=React.useState("");
+
       const handleClickToOpen = () => {
         if(!phoneNo=='' && phoneNo.length==10) setOpen(true);
       };
       const handleToClose = () => {
         setOpen(false);
-        setUpdationStatus("Enter details to update booking");
       };
              
     const handleSubmit = async(event) => {
@@ -56,11 +77,13 @@ const UpdateBookingForm = () => {
                 })
                   .then((response) => {
                      setUpdationStatus(response.data);
+                     setSeverity("sucess");
                      setPhoneNo('');
                      setValue(0);
                      setReservationTime('');      
          
                     }, (error) => {
+                        setSeverity("error");
                         if(!error.response.data==='') setUpdationStatus(error.response.data);
                         else setUpdationStatus("Something Wrong.");
                         setPhoneNo('');
@@ -70,13 +93,11 @@ const UpdateBookingForm = () => {
                     });
                     
 }
-                                         
-
-  
+                                           
     return (
-      <div className="App" style={{position: 'absolute', left: '50%', top: '52%',
-      transform: 'translate(-50%, -50%)'}}> 
+      <div className="App" style={{marginTop: "90pt"}}> 
         <Grid>
+          <MuiThemeProvider theme={theme}>
           <Card style={{ maxWidth: 510, padding: "20px 5px", margin: "0 auto" , boxShadow: 'none'}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
@@ -96,7 +117,18 @@ const UpdateBookingForm = () => {
                        value={phoneNo} placeholder="Enter phone number" label="Phone number" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                  <Select options={noOfMembers} name="members" onChange={handleChange} value={value} placeholder='Members' maxMenuHeight={150} />
+                  <Select options={noOfMembers} name="members" onChange={handleChange} value={value} placeholder='Members' maxMenuHeight={150} 
+                      theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                        ...theme.colors,
+                          text: 'brown',
+                          primary25: 'wheat',
+                          primary: 'brown',
+                        },
+                      })}                  
+                  />
                   </Grid>
                   <Grid item xs={12}>
                   <TextField name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
@@ -107,31 +139,17 @@ const UpdateBookingForm = () => {
   
                 </Grid>
               </form>
-              <Dialog
-                fullWidth
+              <Snackbar
                 open={open}
-                onClose={handleToClose}
-                maxWidth="xs"
-                BackdropProps={{
-                  classes: {
-                    root: classes.backDrop,
-                  },
-                }} >
-          <DialogTitle>{"Notification!"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {updationStatus}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleToClose} 
-                    color="primary" autoFocus>
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+                autoHideDuration={6000}
+                onClose={handleToClose}>
+                    <Alert onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
+                      {updationStatus}
+                    </Alert>
+              </Snackbar>
             </CardContent>
           </Card>
+          </MuiThemeProvider>
         </Grid>
       </div>
     );

@@ -1,0 +1,34 @@
+.error-container {
+    display: flex;
+    background-color: black;
+    color: silver;
+    width: 100%;
+    margin-top: 70px;
+}
+
+.image {
+    width: 50%;
+}
+
+.error-message {
+    margin-top: 230px;
+    margin-left: 170px;
+}
+
+
+@media screen and (max-width: 550px) {
+    .error-container {
+        display:block;
+        margin-top: 180px;
+    }
+
+    .error-message {
+        margin-top: 5px;
+        margin-left: 50px;
+    }
+
+    .image {
+        width: 100%
+    }
+    
+}  
