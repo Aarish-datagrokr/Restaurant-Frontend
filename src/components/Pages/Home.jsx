@@ -4,10 +4,13 @@ import Typical from 'react-typical';
 import { useState } from 'react';
 
 const Home = () => {
+        var status = "Open!";
+        var today = new Date().getHours();
+        if(today>=18) status="Closed!";
         return (
         <div style={{marginTop:"80px"}}>
-            <Typical
-                     steps={['Bookings', 1000, `Bookings Open!`, 500]}
+                <Typical
+                     steps={['Bookings', 1000, `Bookings ${status}`, 500]}
                      loop={Infinity}
                      wrapper="p"
                     className="welcome-text"

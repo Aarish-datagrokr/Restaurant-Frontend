@@ -77,14 +77,14 @@ const UpdateBookingForm = () => {
                 })
                   .then((response) => {
                      setUpdationStatus(response.data);
-                     setSeverity("sucess");
+                     setSeverity("success");
                      setPhoneNo('');
                      setValue(0);
                      setReservationTime('');      
          
                     }, (error) => {
                         setSeverity("error");
-                        if(!error.response.data==='') setUpdationStatus(error.response.data);
+                        if(!error.response.data=='') setUpdationStatus(error.response.data);
                         else setUpdationStatus("Something Wrong.");
                         setPhoneNo('');
                         setValue(0);

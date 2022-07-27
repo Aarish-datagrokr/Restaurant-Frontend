@@ -34,7 +34,7 @@ const useStyles = makeStyles((Theme) => ({
     const [phoneNo,setPhoneNo]=useState('');
     
     const [open,setOpen]=React.useState(false);
-    const [severity,setSeverity]=React.useState("");
+    const [severity,setSeverity]=React.useState("success");
     const handleClickToOpen = () => {
       if(!phoneNo=='' && phoneNo.length==10) setOpen(true);
     };
@@ -56,11 +56,11 @@ const useStyles = makeStyles((Theme) => ({
             method: 'DELETE'
           });
           setCancellationStatus(response.data);
-          setSeverity("sucess");
+          setSeverity("success");
           setPhoneNo('');
         } catch(err) {
           setSeverity("error");
-          if(!err.response.data==='') setCancellationStatus(err.response.data);
+          if(!err.response.data=='') setCancellationStatus(err.response.data);
           else setCancellationStatus("Something Wrong.");
           setPhoneNo('');
           console.log("err->", err.response.data)
