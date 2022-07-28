@@ -103,7 +103,7 @@ const BookingForm = () => {
       <div className="App" style={{marginTop: "90pt"}}> 
         <Grid >
           <MuiThemeProvider theme={theme}>
-          <Card style={{ maxWidth: 510,  padding: "20px 5px", margin: "auto auto"}}>
+          <Card style={{ maxWidth: 510,  padding: "20px 5px", margin: "auto auto", backgroundColor:"wheat"}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Table Booking
@@ -114,10 +114,10 @@ const BookingForm = () => {
               <form onSubmit={(e)=> handleSubmit(e)}>
                 <Grid container spacing={1}>
                   <Grid xs={12} item>
-                    <TextField name="name" onChange={event => setName(event.target.value)} value={name} placeholder="Enter full name" label="Name" variant="outlined" fullWidth required />
+                    <TextField style={{backgroundColor: "white"}} name="name" onChange={event => setName(event.target.value)} value={name} placeholder="Enter full name" label="Name" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                    <TextField style={{backgroundColor: "white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -139,7 +139,7 @@ const BookingForm = () => {
                   />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
+                    <TextField style={{backgroundColor: "white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
                     <Button type="submit" style={{backgroundColor: "brown",fontSize: "18px"}} variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>

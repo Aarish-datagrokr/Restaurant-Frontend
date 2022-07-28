@@ -73,7 +73,7 @@ const useStyles = makeStyles((Theme) => ({
       <div className="App" style={{marginTop: "120pt"}}> 
         <Grid>
           <MuiThemeProvider theme={theme}>
-          <Card style={{ maxWidth: 510, padding: "20px 5px", margin: "0 auto" ,boxShadow: 'none'}}>
+          <Card style={{ maxWidth: 510, padding: "20px 5px", margin: "0 auto" ,boxShadow: 'none', backgroundColor:"wheat"}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Cancel Booking
@@ -84,7 +84,7 @@ const useStyles = makeStyles((Theme) => ({
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
-                  <TextField name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                  <TextField style={{backgroundColor: "white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);

@@ -98,7 +98,7 @@ const UpdateBookingForm = () => {
       <div className="App" style={{marginTop: "90pt"}}> 
         <Grid>
           <MuiThemeProvider theme={theme}>
-          <Card style={{ maxWidth: 510, padding: "20px 5px", margin: "0 auto" , boxShadow: 'none'}}>
+          <Card style={{ maxWidth: 510, padding: "20px 5px", margin: "0 auto" , boxShadow: 'none', backgroundColor: "wheat"}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Change Booking Details
@@ -109,7 +109,7 @@ const UpdateBookingForm = () => {
               <form onSubmit={(e)=> handleSubmit(e)}>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
-                  <TextField name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                  <TextField style={{backgroundColor: "white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -126,12 +126,13 @@ const UpdateBookingForm = () => {
                           text: 'brown',
                           primary25: 'wheat',
                           primary: 'brown',
+                          colors: "wheat"
                         },
                       })}                  
                   />
                   </Grid>
                   <Grid item xs={12}>
-                  <TextField name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
+                  <TextField style={{backgroundColor: "white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
                     <Button type="submit" variant="contained"  onClick={handleClickToOpen} color="primary" fullWidth>Update</Button>
