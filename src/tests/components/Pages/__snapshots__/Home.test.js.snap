@@ -10,6 +10,7 @@ exports[`Should test Home component 1`] = `
 >
   <Memo(Typical)
     className="welcome-text"
+    id="typical"
     loop={Infinity}
     steps={
       Array [

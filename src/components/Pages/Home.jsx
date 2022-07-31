@@ -1,7 +1,6 @@
 import React from 'react';
 import './styles/home.css'
 import Typical from 'react-typical';
-import { useState } from 'react';
 
 const Home = () => {
         var status = "Open!";
