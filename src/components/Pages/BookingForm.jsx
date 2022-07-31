@@ -95,7 +95,7 @@ const BookingForm = () => {
             setPhoneNo('');
             setValue(0);
             setReservationTime('');      
-            console.log(error);
+//            console.log(error);
   });
 
 }
@@ -111,13 +111,13 @@ const BookingForm = () => {
               <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
                 Fill up the form and we will notify you if the table is available.
             </Typography> 
-              <form onSubmit={(e)=> handleSubmit(e)}>
+              <form id='form' onSubmit={(e)=> handleSubmit(e)}>
                 <Grid container spacing={1}>
                   <Grid xs={12} item>
-                    <TextField style={{backgroundColor: "white"}} name="name" onChange={event => setName(event.target.value)} value={name} placeholder="Enter full name" label="Name" variant="outlined" fullWidth required />
+                    <TextField id="name" style={{backgroundColor: "white"}} name="name" onChange={event => setName(event.target.value)} value={name} placeholder="Enter full name" label="Name" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField style={{backgroundColor: "white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                    <TextField id="phoneNo" style={{backgroundColor: "white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -125,7 +125,7 @@ const BookingForm = () => {
                        value={phoneNo} placeholder="Enter phone number" label="Phone number" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                  <Select style={{color:"wheat"}} options={noOfMembers} name="members" onChange={handleChange} value={value} placeholder='Members' maxMenuHeight={150} 
+                  <Select id="members" style={{color:"wheat"}} options={noOfMembers} name="members" onChange={handleChange} value={value} placeholder='Members' maxMenuHeight={150} 
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 0,
@@ -139,10 +139,10 @@ const BookingForm = () => {
                   />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField style={{backgroundColor: "white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
+                    <TextField id="reservationTime" style={{backgroundColor: "white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button type="submit" style={{backgroundColor: "brown",fontSize: "18px"}} variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>
+                    <Button id="addButton" type="submit" style={{backgroundColor: "brown",fontSize: "18px"}} variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Submit</Button>
                   </Grid>
                 </Grid>
               </form>
@@ -150,7 +150,7 @@ const BookingForm = () => {
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleToClose}>
-                    <Alert onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
+                    <Alert id="alert" onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
                       {bookingStatus}
                     </Alert>
               </Snackbar>

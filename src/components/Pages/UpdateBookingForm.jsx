@@ -89,7 +89,7 @@ const UpdateBookingForm = () => {
                         setPhoneNo('');
                         setValue(0);
                         setReservationTime('');      
-                        console.log(error);
+//                        console.log(error);
                     });
                     
 }
@@ -106,10 +106,10 @@ const UpdateBookingForm = () => {
               <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
                 Enter registered phone number and changes you want to update
             </Typography> 
-              <form onSubmit={(e)=> handleSubmit(e)}>
+              <form id='form' onSubmit={(e)=> handleSubmit(e)}>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
-                  <TextField style={{backgroundColor: "white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                  <TextField id="phoneNo" style={{backgroundColor: "white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -117,7 +117,7 @@ const UpdateBookingForm = () => {
                        value={phoneNo} placeholder="Enter phone number" label="Phone number" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                  <Select options={noOfMembers} name="members" onChange={handleChange} value={value} placeholder='Members' maxMenuHeight={150} 
+                  <Select id="members" options={noOfMembers} name="members" onChange={handleChange} value={value} placeholder='Members' maxMenuHeight={150} 
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 0,
@@ -132,10 +132,10 @@ const UpdateBookingForm = () => {
                   />
                   </Grid>
                   <Grid item xs={12}>
-                  <TextField style={{backgroundColor: "white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
+                  <TextField id="reservationTime" style={{backgroundColor: "white"}} name="reservationTime" type="time" onChange={event => setReservationTime(event.target.value)} value={reservationTime} placeholder="Enter reservation time" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button type="submit" variant="contained"  onClick={handleClickToOpen} color="primary" fullWidth>Update</Button>
+                    <Button id="updateButton" type="submit" variant="contained"  onClick={handleClickToOpen} color="primary" fullWidth>Update</Button>
                   </Grid>
   
                 </Grid>
@@ -144,7 +144,7 @@ const UpdateBookingForm = () => {
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleToClose}>
-                    <Alert onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
+                    <Alert id="alert" onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
                       {updationStatus}
                     </Alert>
               </Snackbar>

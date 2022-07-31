@@ -6,7 +6,7 @@ import { useState } from 'react';
 const Home = () => {
         var status = "Open!";
         var today = new Date().getHours();
-        if(today>=18) status="Closed!";
+        if(today>=20) status="Closed!";
         return (
         <div style={{marginTop:"80px"}}>
                 <Typical

@@ -63,7 +63,7 @@ const useStyles = makeStyles((Theme) => ({
           if(!err.response.data=='') setCancellationStatus(err.response.data);
           else setCancellationStatus("Something Wrong.");
           setPhoneNo('');
-          console.log("err->", err.response.data)
+ //         console.log("err->", err.response.data)
  //         console.log(err)
         }     
     }
@@ -81,10 +81,10 @@ const useStyles = makeStyles((Theme) => ({
               <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
                 Enter your registered phone number
             </Typography> 
-              <form onSubmit={handleSubmit}>
+              <form id='form' onSubmit={handleSubmit}>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
-                  <TextField style={{backgroundColor: "white"}} name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
+                  <TextField style={{backgroundColor: "white"}} id="phoneNo" name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
                        const re = /^[0-9\b]+$/;
                        if (event.target.value === '' || re.test(event.target.value)) {
                       setPhoneNo(event.target.value);
@@ -92,7 +92,7 @@ const useStyles = makeStyles((Theme) => ({
                        value={phoneNo} placeholder="Enter phone number" label="Phone number" variant="outlined" fullWidth required />
                   </Grid>
                   <Grid item xs={12}>
-                    <Button type="submit" variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Delete</Button>
+                    <Button id="DeleteButton" type="submit" variant="contained" onClick={handleClickToOpen} color="primary" fullWidth>Delete</Button>
                   </Grid>  
                 </Grid>
               </form>
@@ -100,7 +100,7 @@ const useStyles = makeStyles((Theme) => ({
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleToClose}>
-                    <Alert onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
+                    <Alert id="alert" onClose={handleToClose} severity={severity} sx={{ width: '100%' }}>
                       {cancellationStatus}
                     </Alert>
               </Snackbar>

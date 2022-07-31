@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should test Error component 1`] = `
+<div
+  className="error-container"
+>
+  <img
+    className="image"
+    src="https://cdn.dribbble.com/users/492116/screenshots/1667059/thrillist-404.gif"
+  />
+  <h1
+    className="error-message"
+  >
+    PAGE NOT FOUND!
+  </h1>
+</div>
+`;

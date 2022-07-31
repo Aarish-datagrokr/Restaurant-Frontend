@@ -1,10 +1,9 @@
 import React from 'react';
-import { useState } from "react";
 import "./styles/navbar.css";
 import { Link } from 'react-router-dom';
 
 export default function Navbar() {
-  const [isNavExpanded, setIsNavExpanded] = useState(false);
+  const [isNavExpanded, setIsNavExpanded] = React.useState(false);
 
   return (
     <nav className="navigation">
@@ -13,6 +12,8 @@ export default function Navbar() {
       </Link>
       <button
         className="hamburger"
+        id="hamburger"
+        role="expandNavbar"
         onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}
@@ -38,17 +39,17 @@ export default function Navbar() {
       >
         <ul>
           <li>
-            <Link to='/add' onClick={() => {
+            <Link id="add" to='/add' onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}>Add Booking</Link>
           </li><br />
           <li>
-            <Link to='/update' onClick={() => {
+            <Link id="update" to='/update' onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}>Update Booking</Link>
           </li><br />
           <li>
-            <Link to='/delete' onClick={() => {
+            <Link id="delete" to='/delete' onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}>Delete Booking</Link>
           </li><br />
