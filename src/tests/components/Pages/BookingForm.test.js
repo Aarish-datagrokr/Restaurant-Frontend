@@ -72,5 +72,32 @@ it("should update state on input change and toggle setOpen on button click", () 
       .find('#form')
       .simulate("submit",event);
     });
-    
   });
+
+  describe('Axios testing', () => {
+    const addSpy = jest.spyOn(Axios,'post');
+    const target = {
+      name: '',
+      phoneNo: '',
+      members:'',
+      reservationTime: ''
+    };
+    const event = { preventDefault: () => {},target};
+  
+  
+    test('Booking confirmed', async () => {
+        const response = {data: 'Table booked.'};
+        Axios.post.mockResolvedValue(response);
+        wrapper.find('#form').simulate('submit',event);
+        expect(addSpy).toHaveBeenCalledWith("restaurant/Bookings/Book-For",{"name": undefined, "members": undefined, "phoneNo": undefined, "reservationTime": undefined},{"headers": {"content-type": "application/json"}});
+        expect(useStateSpy).toHaveBeenCalled();    
+      });
+  
+    test('Exception raised', async () => {
+      const data = 'Something Wrong';
+      const error = {response: data};
+      Axios.post.mockRejectedValue(error);
+      expect(useStateSpy).toHaveBeenCalled();    
+    });
+  });
+  

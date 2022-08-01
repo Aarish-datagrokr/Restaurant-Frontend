@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import CancelBookingForm from '../../../components/Pages/CancelBookingForm';
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-
+import axios from 'axios';
 
 const setState = jest.fn();
 const useStateSpy = jest.spyOn(React, "useState");
@@ -55,11 +55,28 @@ describe('Testing of axios request', () => {
   });
 
   it("should test handleSubmit", () => {
-
-    const event = {preventDefault: ()=> {}};
     wrapper
     .find('#form')
     .simulate("submit",event);
   });
-  
+});
+
+describe('Axios testing', () => {
+      const deleteSpy = jest.spyOn(Axios,'delete')
+      const event = { preventDefault: () => {}};
+      test('Booking cancelled', async () => {
+
+      const response = {data: 'Booking cancelled.'};
+      Axios.delete.mockResolvedValue(response);
+      wrapper.find('#form').simulate('submit',event);
+      expect(deleteSpy).toHaveBeenCalledWith(url= `/restaurant/Bookings/Cancel-Booking`, data= '9988776655',method= 'DELETE');
+      expect(useStateSpy).toHaveBeenCalled();    
+    });
+
+  test('Exception raised', async () => {
+    const data = 'Something Wrong';
+    const error = {response: data};
+    Axios.delete.mockRejectedValue(error);
+    expect(useStateSpy).toHaveBeenCalled();    
+  });
 });

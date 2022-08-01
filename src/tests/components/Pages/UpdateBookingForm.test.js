@@ -3,6 +3,7 @@ import {shallow} from 'enzyme';
 import UpdateBookingForm from '../../../components/Pages/UpdateBookingForm';
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import axios from 'axios';
 
 let mockAxios;
 const setState = jest.fn();
@@ -66,3 +67,28 @@ it("should update state on input change and toggle setOpen on button click", () 
         });
         
       });
+
+
+describe('Axios testing', () => {
+  const updateSpy = jest.spyOn(Axios,'put');
+  const target = {
+    phoneNo: '',
+    members:'',
+    reservationTime: ''
+  };
+  const event = { preventDefault: () => {},target};
+  test('Changed booking details.', async () => {
+      const response = {data: 'Booking Updated'};
+      Axios.put.mockResolvedValue(response);
+      wrapper.find('#form').simulate('submit',event);
+      expect(updateSpy).toHaveBeenCalledWith("restaurant/Bookings/Change-Booking-Details",{"members": undefined, "phoneNo": undefined, "reservationTime": undefined},{"headers": {"content-type": "application/json"}});
+      expect(useStateSpy).toHaveBeenCalled();    
+    });
+
+  test('Exception raised', async () => {
+    const data = 'Something Wrong';
+    const error = {response: data};
+    Axios.put.mockRejectedValue(error);
+    expect(useStateSpy).toHaveBeenCalled();    
+  });
+});
