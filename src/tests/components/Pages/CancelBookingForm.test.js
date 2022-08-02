@@ -62,15 +62,19 @@ describe('Testing of axios request', () => {
 });
 
 describe('Axios testing', () => {
-      const deleteSpy = jest.spyOn(Axios,'delete')
-      const event = { preventDefault: () => {}};
+      const deleteSpy = jest.spyOn(Axios,'delete');
+      const target = {
+        phoneNo: '9988776655'
+      };
+      const event = { preventDefault: () => {},target};
       test('Booking cancelled', async () => {
 
       const response = {data: 'Booking cancelled.'};
       Axios.delete.mockResolvedValue(response);
       wrapper.find('#form').simulate('submit',event);
-      expect(deleteSpy).toHaveBeenCalledWith(url= `/restaurant/Bookings/Cancel-Booking`, data= '9988776655',method= 'DELETE');
-      expect(useStateSpy).toHaveBeenCalled();    
+      expect(deleteSpy).toHaveBeenCalledWith(`restaurant/Bookings/Cancel-Booking/${event.target.phoneNo}`);
+      expect(useStateSpy).toHaveBeenCalled();
+
     });
 
   test('Exception raised', async () => {

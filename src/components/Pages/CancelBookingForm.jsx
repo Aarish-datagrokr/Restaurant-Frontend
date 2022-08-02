@@ -42,33 +42,21 @@ const useStyles = makeStyles((Theme) => ({
       setOpen(false);
     };
 
-    
-    
-
-    const classes = useStyles();
-    const handleSubmit = async(event) => {
+        const handleSubmit = async(event) => {
         event.preventDefault();
 
-        try{
-          var response =  await axios({ 
-            url: `/restaurant/Bookings/Cancel-Booking`, 
-            data: phoneNo,
-            method: 'DELETE'
-          });
-          setCancellationStatus(response.data);
-          setSeverity("success");
-          setPhoneNo('');
-        } catch(err) {
-          setSeverity("error");
-          if(!err.response.data=='') setCancellationStatus(err.response.data);
-          else setCancellationStatus("Something Wrong.");
-          setPhoneNo('');
- //         console.log("err->", err.response.data)
- //         console.log(err)
-        }     
-    }
-    
-  
+        await axios.delete(`restaurant/Bookings/Cancel-Booking/${phoneNo}`)
+           .then((response) => {
+            setCancellationStatus(response.data);
+            setSeverity("success");
+            setPhoneNo('');    
+             }, (error) => {
+              setSeverity("error");
+              if(!error.response.data=='') setCancellationStatus(error.response.data);
+              else setCancellationStatus("Something Wrong.");
+              setPhoneNo('');
+             });
+    }  
     return (
       <div className="App" style={{marginTop: "120pt"}}> 
         <Grid>
@@ -81,7 +69,7 @@ const useStyles = makeStyles((Theme) => ({
               <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
                 Enter your registered phone number
             </Typography> 
-              <form id='form' onSubmit={handleSubmit}>
+              <form id='form' onSubmit={(e)=> handleSubmit(e)}>
                 <Grid container spacing={1}>
                   <Grid item xs={12}>
                   <TextField style={{backgroundColor: "white"}} id="phoneNo" name="phoneNo" inputProps={{maxLength:10, minLength:10}} onChange={(event) => {
